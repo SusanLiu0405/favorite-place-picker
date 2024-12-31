@@ -1,0 +1,26 @@
+<app-places-container title="Available Places">
+  @if (isFetching() && !error()) {
+    <p class="fallback-text">Fetching available places...</p>
+  }
+  @if (error()) {
+    <p class="fallback-text">{{ error() }}</p>
+  }
+  @if (places()) {
+    <!-- 
+    (selectPlace)="onSelectPlace($event),  
+    event binding
+    
+    (selectPlace): 
+    - This represents an event binding for an event named selectPlace.
+    - selectPlace is selectPlace = output<Place>(); in places.component.ts
+    - This event is typically defined and emitted by a child component using Angular’s @Output decorator.
+
+    ="onSelectPlace($event)":
+    - This specifies that when the selectPlace event is emitted, the onSelectPlace method in the component’s class should be called.
+    - The $event is a special variable that represents the data sent with the event when it’s emitted, allowing the method to receive that data as an argument.
+    -->
+    <app-places [places]="places()!" (selectPlace)="onSelectPlace($event)"/>
+  } @else if (places()?.length === 0) {
+  <p class="fallback-text">Unfortunately, no places could be found.</p>
+  }
+</app-places-container>

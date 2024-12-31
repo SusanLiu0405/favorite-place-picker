@@ -1,0 +1,20 @@
+<app-places-container title="Your Favorite Places">
+  @if (isFetching() && !error()) {
+    <p class="fallback-text">Fetching favorite places...</p>
+  }
+
+  @if (error()) {
+    <p class="fallback-text">{{ error() }}</p>
+  }
+
+  @if (places()) {
+    <!-- In TypeScript, if a function or property might return null or undefined, the compiler 
+     will warn you unless you explicitly handle those cases -->
+    <!-- Without the !, if the return type of places() is Place[] | null, the TypeScript compiler 
+     would throw an error when you try to pass it to a binding like [places] because null is not a 
+     valid input for the places property. -->
+    <app-places [places]="places()!" (selectPlace)="onRemovePlace($event)" />
+  } @else if (places().length === 0) {
+    <p class="fallback-text">Unfortunately, no places could be found.</p>
+  }
+</app-places-container>
